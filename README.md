@@ -13,6 +13,10 @@ components of the **WizardWrx .NET API**, which is documented at https://txwizar
 and is available as a set of NuGet packages. This program requires and incorporates
 version **9.0.566** of the `WizardWrx.ConsoleAppAids3` package.
 
+## Availability
+
+The binary package is available at https://github.com/txwizard/Touch1File/blob/main/Touch1File.7z
+
 ## Usage
 
 `Touch1File` is intended to be executed from a standard Windows desktop shortcut.
