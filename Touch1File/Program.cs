@@ -64,6 +64,8 @@
                            a confirmation message when the file's LastWriteTime
                            is successfully changed, and color code messages that
                            report success versus failure.
+    2023/12/10 1.2     DAG Replace the light green background with a dark green,
+                           and scroll the console buffer up two lines.
     ============================================================================
 */
 
@@ -137,7 +139,7 @@ namespace Touch1File
 
                         if ( info.LastWriteTimeUtc == dtmUtcNow )
                         {
-                            WizardWrx.ConsoleStreams.MessageInColor messageInColor = new WizardWrx.ConsoleStreams.MessageInColor ( ConsoleColor.White , ConsoleColor.Green );
+                            WizardWrx.ConsoleStreams.MessageInColor messageInColor = new WizardWrx.ConsoleStreams.MessageInColor ( ConsoleColor.White , ConsoleColor.DarkGreen );
                             messageInColor.WriteLine ( Properties.Resources.LOGMSG_FILE_TOUCH_SUCCESSFUL );
                         }   // TRUE (anticipated outcome) block, if ( info.LastWriteTimeUtc == dtmUtcNow )
                         else
@@ -163,6 +165,7 @@ namespace Touch1File
             }   // FALSE (unanticipated outcome) block, if ( args.Length > ListInfo.LIST_IS_EMPTY )
 
             s_theApp.DisplayEOJMessage ( );
+            Console.WriteLine ( ); // Emit two newlines, of which the first also returns the carriage, while the second creates a blank line in the output stream.
             s_theApp.NormalExit ( ConsoleAppStateManager.NormalExitAction.WaitForOperator );
         }   // static void Main
     }   // internal class Program

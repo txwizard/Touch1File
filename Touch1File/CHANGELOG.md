@@ -6,6 +6,15 @@ from inception.
 As I do with _every_ ChangeLog that I publish, revisions appear most recent
 first, so that the latest changes are visible without scrolling.
 
+## 2023/12/10, Version 1.2
+
+This version makes two significant improvements.
+
+1. The garish green background is replaced by something more nearly resembling forest green.
+1. On exit, the console buffer is scrolled up by two lines, leaving a blank line after the final prompt.
+
+Additionally, the dependent libraries are updated to versions that explicitly target Microsoft .NET Framework version 4.8.
+
 ## 2023/06/29, Version 1.1
 
 This version makes two significant improvements.
