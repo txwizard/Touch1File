@@ -117,6 +117,45 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CMDARG_HOW2WAIT" xml:space="preserve">
+    <value>how2wait</value>
+  </data>
+  <data name="CMDARG_UNSPECIFIED" xml:space="preserve">
+    <value>unsp</value>
+  </data>
+  <data name="CMDARG_WAITCARBON" xml:space="preserve">
+    <value>carb</value>
+  </data>
+  <data name="CMDARG_WAITNONE" xml:space="preserve">
+    <value>cont</value>
+  </data>
+  <data name="CMDARG_WAITTIME" xml:space="preserve">
+    <value>waittime</value>
+  </data>
+  <data name="CMDARG_WAIT_TILL" xml:space="preserve">
+    <value>wait</value>
+  </data>
+  <data name="CMD_ARG_MSG_DEFAULT_WAIT" xml:space="preserve">
+    <value>Return after default wait time of {0} seconds</value>
+  </data>
+  <data name="CMD_ARG_MSG_HOW2EXIT" xml:space="preserve">
+    <value>Action on Program Termination    = {0} ({1})</value>
+  </data>
+  <data name="CMD_ARG_MSG_UNSPECIFIED" xml:space="preserve">
+    <value>Legacy behavior - Wait until the operator presses the ENTEER (RETURN) key.</value>
+  </data>
+  <data name="CMD_ARG_MSG_WAIT_CARBON" xml:space="preserve">
+    <value>Wait until the operator presses the ENTEER (RETURN) key.</value>
+  </data>
+  <data name="CMD_ARG_MSG_WAIT_DURATION" xml:space="preserve">
+    <value>Time in seconds to wait          = {0}{1}</value>
+  </data>
+  <data name="CMD_ARG_MSG_WAIT_NONE" xml:space="preserve">
+    <value>Return control immediately to the script or OS.</value>
+  </data>
+  <data name="CMD_ARG_MSG_WAIT_TIME" xml:space="preserve">
+    <value>Return after time specified by {0} switch ({1} seconds).</value>
+  </data>
   <data name="ERRMSG_FILE_NAME_MISSING" xml:space="preserve">
     <value>The file name is missing from the command line.</value>
   </data>
@@ -143,5 +182,11 @@
   </data>
   <data name="LOGMSG_SPECIFIED_INPUT_FILENAME" xml:space="preserve">
     <value>Input File Name                  = {0}{1}</value>
+  </data>
+  <data name="MSG_WAIT_PER_CMDARG" xml:space="preserve">
+    <value> (per command line)</value>
+  </data>
+  <data name="MSG_WAIT_PER_DEFAULT" xml:space="preserve">
+    <value>(per programmed default)</value>
   </data>
 </root>

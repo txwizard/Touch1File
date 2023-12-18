@@ -59,13 +59,18 @@
     Date       Version By  Description
     ---------- ------- --- -----------------------------------------------------
 	2023/06/28 1.0     DAG MVP: Initial release.
+
     2023/06/29 1.1     DAG Display the absolute (fully qualified) file name in
                            the first message that follows the logo banner, print
                            a confirmation message when the file's LastWriteTime
                            is successfully changed, and color code messages that
                            report success versus failure.
+
     2023/12/10 1.2     DAG Replace the light green background with a dark green,
                            and scroll the console buffer up two lines.
+
+    2023/12/16 2.0     DAG Implement additional exit methods to allow timed exit
+                           and immediate exit.
     ============================================================================
 */
 
@@ -81,14 +86,25 @@ namespace Touch1File
 {
     internal class Program
     {
+        enum TerminationMethod
+        {
+            Unspecified,
+            AwaitCarbonUnit,
+            WaitForTime,
+            ReturnImmediately
+        }
+
         private static readonly ConsoleAppStateManager s_theApp = ConsoleAppStateManager.GetTheSingleInstance ( );
 
 
         static void Main ( string [ ] args )
         {
+            const int DEFAULT_WAIT_TIME = 30;
+            const int HOW2WAIT_PREFIX_LENGTH = 4;
+
             const int ERROR_FILE_NAME_MISSING = MagicNumbers.ERROR_RUNTIME + MagicNumbers.PLUS_ONE;
             const int ERROR_FILE_NOT_FOUND = ERROR_FILE_NAME_MISSING + MagicNumbers.PLUS_ONE;
-            const int ERROR_FILE_TOUCH_UNSUCCESSFUL= ERROR_FILE_NOT_FOUND + MagicNumbers.PLUS_ONE;
+            const int ERROR_FILE_TOUCH_UNSUCCESSFUL = ERROR_FILE_NOT_FOUND + MagicNumbers.PLUS_ONE;
 
             s_theApp.BaseStateManager.AppExceptionLogger.OptionFlags = s_theApp.BaseStateManager.AppExceptionLogger.OptionFlags
                                                                        | ExceptionLogger.OutputOptions.Stack
@@ -102,12 +118,105 @@ namespace Touch1File
                     Properties.Resources.ERRMSG_FILE_NOT_FOUND ,                // ERROR_FILE_NOT_FOUND
                 } );
             s_theApp.DisplayBOJMessage ( );
+            TerminationMethod enmTerminationMethod = TerminationMethod.Unspecified;
+            int intWaitTime = DEFAULT_WAIT_TIME;
 
             if ( args.Length > ListInfo.LIST_IS_EMPTY )
             {
                 try
                 {
-                    FileInfo info = new FileInfo ( args [ ArrayInfo.ARRAY_FIRST_ELEMENT ] );
+                    WizardWrx.Core.CmdLneArgsBasic cmdArgs = new WizardWrx.Core.CmdLneArgsBasic (
+                        new string [ ]
+                        {
+                            Properties.Resources.CMDARG_HOW2WAIT ,
+                            Properties.Resources.CMDARG_WAITTIME
+                        } ,
+                        WizardWrx.Core.CmdLneArgsBasic.ArgMatching.CaseInsensitive );
+                    string strRawArg = cmdArgs.GetArgByName (
+                        Properties.Resources.CMDARG_HOW2WAIT );
+                    string strHow2Wait = string.IsNullOrEmpty ( strRawArg ) 
+                        ? SpecialStrings.EMPTY_STRING 
+                        : strRawArg.Substring (
+                            ListInfo.SUBSTR_BEGINNING ,
+                            HOW2WAIT_PREFIX_LENGTH );
+
+                    if ( strHow2Wait == Properties.Resources.CMDARG_WAIT_TILL )
+                    {
+                        enmTerminationMethod = TerminationMethod.WaitForTime;
+                        string strHowLong2Wait = cmdArgs.GetArgByName ( Properties.Resources.CMDARG_WAITTIME );
+
+                        if ( strHowLong2Wait.Length > ListInfo.EMPTY_STRING_LENGTH )
+                        {
+                            if ( int.TryParse ( strHowLong2Wait , out intWaitTime ) )
+                            {
+                                Console.WriteLine (
+                                    Properties.Resources.CMD_ARG_MSG_HOW2EXIT ,
+                                    Properties.Resources.CMDARG_WAIT_TILL ,
+                                    string.Format (
+                                        Properties.Resources.CMD_ARG_MSG_WAIT_TIME ,
+                                        Properties.Resources.CMD_ARG_MSG_DEFAULT_WAIT ,
+                                        intWaitTime ) );
+                                Console.WriteLine (
+                                    Properties.Resources.CMD_ARG_MSG_WAIT_DURATION ,
+                                    intWaitTime ,
+                                    Properties.Resources.MSG_WAIT_PER_CMDARG );
+                            }
+                            else
+                            {
+                                Console.WriteLine (
+                                    Properties.Resources.CMD_ARG_MSG_HOW2EXIT ,
+                                    Properties.Resources.CMDARG_WAIT_TILL ,
+                                    string.Format (
+                                        Properties.Resources.CMD_ARG_MSG_WAIT_TIME ,
+                                        Properties.Resources.CMDARG_WAIT_TILL ,
+                                        intWaitTime ) );
+                                Console.WriteLine (
+                                    Properties.Resources.CMD_ARG_MSG_WAIT_DURATION ,
+                                    intWaitTime ,
+                                    Properties.Resources.MSG_WAIT_PER_DEFAULT );
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine (
+                                Properties.Resources.CMD_ARG_MSG_HOW2EXIT ,
+                                Properties.Resources.CMDARG_WAIT_TILL ,
+                                string.Format (
+                                    Properties.Resources.CMD_ARG_MSG_WAIT_TIME ,
+                                    Properties.Resources.CMDARG_WAIT_TILL ,
+                                    intWaitTime ) );
+                            Console.WriteLine (
+                                Properties.Resources.CMD_ARG_MSG_WAIT_DURATION ,
+                                intWaitTime ,
+                                Properties.Resources.MSG_WAIT_PER_DEFAULT );
+                        }
+                    }   // if ( strHow2Wait == Properties.Resources.CMDARG_WAIT_TILL )
+                    else if ( strHow2Wait == Properties.Resources.CMDARG_WAITNONE )
+                    {
+                        enmTerminationMethod = TerminationMethod.ReturnImmediately;
+                        Console.WriteLine (
+                            Properties.Resources.CMD_ARG_MSG_HOW2EXIT ,
+                            Properties.Resources.CMDARG_WAITNONE ,
+                            Properties.Resources.CMD_ARG_MSG_WAIT_NONE );
+                    }   // else if ( strHow2Wait == Properties.Resources.CMDARG_WAITNONE )
+                    else if ( strHow2Wait == Properties.Resources.CMDARG_WAITCARBON )
+                    {
+                        enmTerminationMethod = TerminationMethod.AwaitCarbonUnit;
+                        Console.WriteLine (
+                            Properties.Resources.CMD_ARG_MSG_HOW2EXIT ,
+                            Properties.Resources.CMDARG_WAITCARBON ,
+                            Properties.Resources.CMD_ARG_MSG_WAIT_CARBON );
+                    }   // TRUE block, else if ( strHow2Wait == Properties.Resources.CMDARG_WAITCARBON )
+                    else
+                    {
+                        enmTerminationMethod = TerminationMethod.AwaitCarbonUnit;
+                        Console.WriteLine (
+                            Properties.Resources.CMD_ARG_MSG_HOW2EXIT ,
+                            Properties.Resources.CMDARG_UNSPECIFIED ,
+                            Properties.Resources.CMD_ARG_MSG_UNSPECIFIED );
+                    }   // FALSE block, else if ( strHow2Wait == Properties.Resources.CMDARG_WAITCARBON )
+
+                    FileInfo info = new FileInfo ( cmdArgs.GetArgByPosition ( MagicNumbers.PLUS_ONE ) );
                     Console.WriteLine (
                         Properties.Resources.LOGMSG_SPECIFIED_INPUT_FILENAME ,  // Format Control String
                         info.FullName ,                                         // Format Item 0: Input File Name                  = {0}
@@ -125,7 +234,7 @@ namespace Touch1File
                             Properties.Resources.LOGMSG_INPUT_FILE_NEW_DATE ,   // Format Control String
                             dtmUtcNow.ToLocalTime ( ).ToString (                // Format Item 0: Input File Revised LastWriteTime = {0}
                                 Properties.Resources.FILETIME_FORMAT ) ,        // Format string for LastWriteTime
-                        Environment.NewLine );                                  // Format Item 1: Newline at end of text
+                            Environment.NewLine );                              // Format Item 1: Newline at end of text
                         File.SetLastWriteTimeUtc (
                             info.FullName ,                                     // string path
                             dtmUtcNow );                                        // DateTime lastWriteTimeUtc
@@ -165,8 +274,29 @@ namespace Touch1File
             }   // FALSE (unanticipated outcome) block, if ( args.Length > ListInfo.LIST_IS_EMPTY )
 
             s_theApp.DisplayEOJMessage ( );
-            Console.WriteLine ( ); // Emit two newlines, of which the first also returns the carriage, while the second creates a blank line in the output stream.
-            s_theApp.NormalExit ( ConsoleAppStateManager.NormalExitAction.WaitForOperator );
+
+            switch ( enmTerminationMethod )
+            {
+                case TerminationMethod.AwaitCarbonUnit:
+                    s_theApp.NormalExit ( ConsoleAppStateManager.NormalExitAction.WaitForOperator );
+                    break;
+
+                case TerminationMethod.WaitForTime:
+                    s_theApp.NormalExit (
+                        ( uint ) s_theApp.BaseStateManager.AppReturnCode ,
+                        null ,
+                        ConsoleAppStateManager.NormalExitAction.Timed ,
+                        ( uint ) intWaitTime ,
+                        null ,
+                        ConsoleColor.White ,
+                        ConsoleColor.Blue ,
+                        DisplayAids.InterruptCriterion.CarriageReturn );
+                    break;
+
+                case TerminationMethod.ReturnImmediately:
+                    s_theApp.NormalExit ( ConsoleAppStateManager.NormalExitAction.ExitImmediately );
+                    break;
+            }   // switch ( enmTerminationMethod )
         }   // static void Main
     }   // internal class Program
 }   // namespace Touch1File

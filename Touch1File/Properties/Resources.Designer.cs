@@ -61,6 +61,123 @@ namespace Touch1File.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Return after default wait time of {0} seconds.
+        /// </summary>
+        internal static string CMD_ARG_MSG_DEFAULT_WAIT {
+            get {
+                return ResourceManager.GetString("CMD_ARG_MSG_DEFAULT_WAIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action on Program Termination    = {0} ({1}).
+        /// </summary>
+        internal static string CMD_ARG_MSG_HOW2EXIT {
+            get {
+                return ResourceManager.GetString("CMD_ARG_MSG_HOW2EXIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Legacy behavior - Wait until the operator presses the ENTEER (RETURN) key..
+        /// </summary>
+        internal static string CMD_ARG_MSG_UNSPECIFIED {
+            get {
+                return ResourceManager.GetString("CMD_ARG_MSG_UNSPECIFIED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait until the operator presses the ENTEER (RETURN) key..
+        /// </summary>
+        internal static string CMD_ARG_MSG_WAIT_CARBON {
+            get {
+                return ResourceManager.GetString("CMD_ARG_MSG_WAIT_CARBON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time in seconds to wait          = {0}{1}.
+        /// </summary>
+        internal static string CMD_ARG_MSG_WAIT_DURATION {
+            get {
+                return ResourceManager.GetString("CMD_ARG_MSG_WAIT_DURATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return control immediately to the script or OS..
+        /// </summary>
+        internal static string CMD_ARG_MSG_WAIT_NONE {
+            get {
+                return ResourceManager.GetString("CMD_ARG_MSG_WAIT_NONE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return after time specified by {0} switch ({1} seconds)..
+        /// </summary>
+        internal static string CMD_ARG_MSG_WAIT_TIME {
+            get {
+                return ResourceManager.GetString("CMD_ARG_MSG_WAIT_TIME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to how2wait.
+        /// </summary>
+        internal static string CMDARG_HOW2WAIT {
+            get {
+                return ResourceManager.GetString("CMDARG_HOW2WAIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unsp.
+        /// </summary>
+        internal static string CMDARG_UNSPECIFIED {
+            get {
+                return ResourceManager.GetString("CMDARG_UNSPECIFIED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to wait.
+        /// </summary>
+        internal static string CMDARG_WAIT_TILL {
+            get {
+                return ResourceManager.GetString("CMDARG_WAIT_TILL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to carb.
+        /// </summary>
+        internal static string CMDARG_WAITCARBON {
+            get {
+                return ResourceManager.GetString("CMDARG_WAITCARBON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cont.
+        /// </summary>
+        internal static string CMDARG_WAITNONE {
+            get {
+                return ResourceManager.GetString("CMDARG_WAITNONE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to waittime.
+        /// </summary>
+        internal static string CMDARG_WAITTIME {
+            get {
+                return ResourceManager.GetString("CMDARG_WAITTIME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The file name is missing from the command line..
         /// </summary>
         internal static string ERRMSG_FILE_NAME_MISSING {
@@ -138,6 +255,24 @@ namespace Touch1File.Properties {
         internal static string LOGMSG_SPECIFIED_INPUT_FILENAME {
             get {
                 return ResourceManager.GetString("LOGMSG_SPECIFIED_INPUT_FILENAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  (per command line).
+        /// </summary>
+        internal static string MSG_WAIT_PER_CMDARG {
+            get {
+                return ResourceManager.GetString("MSG_WAIT_PER_CMDARG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (per programmed default).
+        /// </summary>
+        internal static string MSG_WAIT_PER_DEFAULT {
+            get {
+                return ResourceManager.GetString("MSG_WAIT_PER_DEFAULT", resourceCulture);
             }
         }
     }
